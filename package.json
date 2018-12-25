@@ -1,0 +1,21 @@
+{
+  "name": "advent-of-code",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Solution for Advent of Code",
+  "main": "index.js",
+  "repository": "thomasklwong/advent-of-code",
+  "keywords": [
+    "advent",
+    "code"
+  ],
+  "author": "Thomas Wong",
+  "license": "GPL-3.0-only",
+  "bugs": {
+    "url": "https://github.com/thomasklwong/advent-of-code/issues"
+  },
+  "homepage": "https://github.com/thomasklwong/advent-of-code#readme",
+  "engines": {
+    "node": ">=10"
+  }
+}
