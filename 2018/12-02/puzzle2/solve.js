@@ -1,6 +1,6 @@
 #!/bin/sh
 
-':' //; exec "$(command -v nodejs || command -v node)" "$0" "$@"
+':'; //; exec "$(command -v nodejs || command -v node)" "$0" "$@"
 
 const reader = require('../../../lib/reader');
 const lineReader = reader.read();
@@ -8,18 +8,21 @@ const lineReader = reader.read();
 const ids = [];
 
 const mergeAndDiff = (a = '', b = '') => {
-  return a.split('').reduce((acc, char, index) => {
-    if (char === b[index]) {
-      acc.common += char;
-    } else {
-      acc.diff.push(char);
-    }
+  return a.split('').reduce(
+    (acc, char, index) => {
+      if (char === b[index]) {
+        acc.common += char;
+      } else {
+        acc.diff.push(char);
+      }
 
-    return acc;
-  }, {
-    common: '',
-    diff: []
-  });
+      return acc;
+    },
+    {
+      common: '',
+      diff: []
+    }
+  );
 };
 
 lineReader.on('line', line => ids.push(line));
@@ -30,7 +33,7 @@ lineReader.on('close', () => {
 
   ids.sort();
 
-  console.log(ids.length)
+  console.log(ids.length);
 
   while (!found && ids.length) {
     const first = ids.shift();
@@ -39,7 +42,9 @@ lineReader.on('close', () => {
       result = mergeAndDiff(id, first);
       found = result.diff.length === 1;
 
-      console.log(`(${first}, ${id}), common: ${result.common}, diff: ${result.diff}`);
+      console.log(
+        `(${first}, ${id}), common: ${result.common}, diff: ${result.diff}`
+      );
 
       return found;
     });

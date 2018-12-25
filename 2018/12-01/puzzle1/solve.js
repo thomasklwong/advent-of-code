@@ -1,6 +1,6 @@
 #!/bin/sh
 
-':' //; exec "$(command -v nodejs || command -v node)" "$0" "$@"
+':'; //; exec "$(command -v nodejs || command -v node)" "$0" "$@"
 
 const fs = require('fs');
 const readline = require('readline');
@@ -21,7 +21,6 @@ lineReader.on('line', line => {
   }
 
   const [_, sign, f] = result;
-
 
   if (sign === '+') {
     frequency += parseInt(f);

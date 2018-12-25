@@ -1,6 +1,6 @@
 #!/bin/sh
 
-':' //; exec "$(command -v nodejs || command -v node)" "$0" "$@"
+':'; //; exec "$(command -v nodejs || command -v node)" "$0" "$@"
 
 const reader = require('../../../lib/reader');
 const lineReader = reader.read();
@@ -10,16 +10,18 @@ const exact = {
   three: 0
 };
 
-
 const appearTwiceOrThrice = (str = '') => {
-  const normalised = str.split('').sort().join('');
+  const normalised = str
+    .split('')
+    .sort()
+    .join('');
   const re = /(\w)\1\1|(\w)\2/g;
   let result;
 
   const found = {
     two: false,
     three: false
-  }
+  };
 
   console.log(`Normalised ${str} -> ${normalised}`);
 
@@ -42,12 +44,8 @@ const appearTwiceOrThrice = (str = '') => {
   return found;
 };
 
-
 lineReader.on('line', line => {
-  const {
-    two,
-    three
-  } = appearTwiceOrThrice(line);
+  const { two, three } = appearTwiceOrThrice(line);
 
   if (two) {
     exact.two += 1;
@@ -58,6 +56,5 @@ lineReader.on('line', line => {
 });
 
 lineReader.on('close', () => {
-
   console.log(`checksum: ${exact.two * exact.three}`);
 });

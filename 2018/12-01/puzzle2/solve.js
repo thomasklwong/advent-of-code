@@ -1,6 +1,6 @@
 #!/bin/sh
 
-':' //; exec "$(command -v nodejs || command -v node)" "$0" "$@"
+':'; //; exec "$(command -v nodejs || command -v node)" "$0" "$@"
 
 const fs = require('fs');
 const readline = require('readline');
@@ -19,7 +19,6 @@ const drifts = [];
 
 let currentFrequency = 0;
 const log = {};
-
 
 lineReader.on('line', line => {
   const result = extractor.exec(line);
@@ -76,10 +75,7 @@ lineReader.on('close', () => {
     console.log(`Haven't landed on same frequency twice yet.`);
 
     const {
-      value: {
-        func,
-        drift
-      }
+      value: { func, drift }
     } = iterator.next();
 
     currentFrequency = func(currentFrequency, drift);
