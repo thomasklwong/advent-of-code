@@ -1,6 +1,4 @@
-#!/bin/sh
-
-':'; //; exec "$(command -v nodejs || command -v node)" "$0" "$@"
+#!/usr/bin/env node
 
 const reader = require('../../../lib/reader');
 const lineReader = reader.read();
