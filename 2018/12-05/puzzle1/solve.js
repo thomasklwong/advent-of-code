@@ -1,51 +1,39 @@
 #!/usr/bin/env node
 
-const reader = require('../../../lib/reader');
+const reader = require('@my/lib/reader');
+const { az } = require('@my/lib/ranges');
+
 const lineReader = reader.read();
 
-const isLowerCase = s => s === s.toLowerCase();
-const isUpperCase = s => s === s.toUpperCase();
-const mergeable = (a, b) => {
-  if (isUpperCase(a) && isUpperCase(b)) {
-    return false;
-  }
-
-  if (isLowerCase(a) && isLowerCase(b)) {
-    return false;
-  }
-
-  return a.toLowerCase() === b.toLowerCase();
-};
+const regexp = new RegExp(
+  [
+    ...az.map(lower => `${lower}${lower.toUpperCase()}`),
+    ...az.map(lower => `${lower.toUpperCase()}${lower}`)
+  ].join('|'),
+  'g'
+);
 
 class Polymer {
   constructor(line) {
+    this.done = false;
     this.units = line;
   }
 
   react() {
-    const { units } = this;
-    // Less 1 as we cannot select the last unit
-    const max = units.length - 1;
-    let found = false;
-    let index = 0;
+    const { done, units } = this;
 
-    // Less
-    for (; index < max; index++) {
-      found = mergeable(units[index], units[index + 1]);
-
-      if (found) {
-        break;
-      }
+    if (done) {
+      return;
     }
 
-    if (found) {
-      const left = units.substring(0, index);
-      const right = units.substring(index + 2);
+    const newUnit = units.replace(regexp, '');
 
-      this.units = `${left}${right}`;
+    if (units === newUnit) {
+      this.done = true;
+      return;
     }
 
-    return found;
+    this.units = newUnit;
   }
 
   toString() {
@@ -55,10 +43,12 @@ class Polymer {
 
 let polymer;
 lineReader.on('line', line => (polymer = new Polymer(line)));
+
 lineReader.on('close', () => {
-  while (polymer.react()) {
+  while (!polymer.done) {
+    polymer.react();
     console.log(`Intermediate: ${polymer}`);
   }
 
-  console.log(`Product: ${polymer}`);
+  console.log(`Finish: ${polymer}`);
 });
