@@ -19,6 +19,7 @@
     "node": ">=10"
   },
   "devDependencies": {
+    "@my/lib": "./lib",
     "eslint": "5.11.0",
     "eslint-config-prettier": "3.3.0",
     "eslint-plugin-prettier": "3.0.0",

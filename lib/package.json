@@ -1,0 +1,14 @@
+{
+  "name": "@my/lib",
+  "private": true,
+  "description": "My util for the advent of code",
+  "author": "Thomas Wong",
+  "license": "GPL-3.0-only",
+  "bugs": {
+    "url": "https://github.com/thomasklwong/advent-of-code/issues"
+  },
+  "homepage": "https://github.com/thomasklwong/advent-of-code#readme",
+  "engines": {
+    "node": ">=10"
+  }
+}
